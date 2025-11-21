@@ -15,6 +15,7 @@ void arr_out(int *a, int n);
 string extraLetter(string a, string b);
 void twoSum(int data, int n, int target);
 void anagramma(vector<string>& vec);
+void shell_sort(int *arr, int n);  
 
 //Задача 1 "Найти ближайший ЦЕЛЫЙ корень числа"
 int binarySearchSqrt(int target)
@@ -182,10 +183,32 @@ void anagramma(vector<string>& vec)
     }
 }
 
+//Задача 7 "Сортировка Шелла"
+void shell_sort(int *arr, int n)
+{
+   int m_gap, gap = n / 2, help;
+   while(gap > 0)
+   {
+      for(int current_position = gap; current_position < n; current_position++) 
+      {
+         m_gap = current_position;
+         while(m_gap >= gap && arr[m_gap] < arr[m_gap - gap])
+         {
+            help = arr[m_gap];
+            arr[m_gap] = arr[m_gap - gap];
+            arr[m_gap - gap] = help;
+            m_gap = m_gap - gap;
+         }
+      }
+      gap = gap / 2;
+   }
+}
+
 int main()
 {
     int target;
     int animals[10] = {3, 4, 7}, food[10] = {8, 1, 2}, data[10];
+    int arr[10];
     cout << "Задача 1 'Найти ближайший ЦЕЛЫЙ корень числа'" << endl;
     cout << "Для 0: " << binarySearchSqrt(0) << endl;
     cout << "Для 1: " << binarySearchSqrt(1) << endl;
@@ -305,5 +328,34 @@ int main()
     a.push_back("nat");
     a.push_back("bat");
     anagramma(a);
+    
+    cout << "/////////////////////////////////////////////" << endl;
+    
+    cout << "Задача 7 'Сортировка Шелла'" << endl;
+    cout << "Было: ";
+    for(int i = 0; i < 10; i++)
+    {
+       arr[i] = 10 - i;
+       cout << arr[i] << " ";
+    }
+    cout << endl << "Стало: ";
+    shell_sort(arr, 10);
+    for(int i = 0; i < 10; i++)
+    {
+       cout << arr[i] << " ";
+    }
+    cout << endl;
+    cout << "Было: ";
+    for(int i = 0; i < 10; i++)
+    {
+       arr[i] = rand() % 100 + 1;
+       cout << arr[i] << " ";
+    }
+    cout << endl << "Стало: ";
+    shell_sort(arr, 10);
+    for(int i = 0; i < 10; i++)
+    {
+       cout << arr[i] << " ";
+    }
     return 0;
 }
